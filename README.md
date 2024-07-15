@@ -1,4 +1,4 @@
-# Official Repository of Towards Model-Agnostic Dataset Condensation by Heterogeneous Models (ECCV 2024)
+# Towards Model-Agnostic Dataset Condensation by Heterogeneous Models (ECCV 2024)
 
 Official PyTorch implementation for ECCV 2024 paper:
 
