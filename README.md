@@ -1,5 +1,7 @@
 # Towards Model-Agnostic Dataset Condensation by Heterogeneous Models (ECCV 2024, Oral)
 
+[![arXiv](https://img.shields.io/badge/arXiv-2409.14538-b31b1b.svg)](https://arxiv.org/abs/2409.14538)
+
 Official PyTorch implementation for the ECCV 2024 paper:
 
 **Towards Model-Agnostic Dataset Condensation by Heterogeneous Models**  
