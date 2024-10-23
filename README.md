@@ -46,6 +46,7 @@ To evaluate the condensed dataset, use the following command:
 ./scripts/run_test_condensation.sh CIFAR10 2000 128 ./PATH --ft
 ```
 - Note: Append --ft or --scratch at the end of the command depending on the model type used (pretrained or randomly initialized).
+- The PATH should include synthetic_images.pth
 
 ## Acknowledgements
 
