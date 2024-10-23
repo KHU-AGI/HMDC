@@ -60,7 +60,7 @@ We are grateful to these authors and the wider research community for their cont
 
 ## Citation
 
-'''bibtex
+```BibTeX
 @misc{moon2024modelagnosticdatasetcondensationheterogeneous,
       title={Towards Model-Agnostic Dataset Condensation by Heterogeneous Models}, 
       author={Jun-Yeong Moon and Jung Uk Kim and Gyeong-Moon Park},
@@ -70,7 +70,7 @@ We are grateful to these authors and the wider research community for their cont
       primaryClass={cs.CV},
       url={https://arxiv.org/abs/2409.14538}, 
 }
-'''
+```
 - Note: The citation information will be updated.
 
 
