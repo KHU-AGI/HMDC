@@ -3,7 +3,7 @@
 Official PyTorch implementation for the ECCV 2024 paper:
 
 **Towards Model-Agnostic Dataset Condensation by Heterogeneous Models**  
-*Jun-Yeong Moon, Jung Uk Kim $^\dagger$, Gyeong-Moon Park $^\dagger$*
+*Jun-Yeong Moon, Jung Uk Kim* $^\dagger$*, Gyeong-Moon Park* $^\dagger$
 
 ## Installation
 
