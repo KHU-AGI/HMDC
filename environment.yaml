@@ -159,6 +159,8 @@ dependencies:
   - ncurses=6.5=he02047a_1
   - nettle=3.7.3=hbbd107a_1
   - networkx=3.2.1=py312h06a4308_0
+  - ninja=1.10.2=h06a4308_5
+  - ninja-base=1.10.2=hd09550d_5
   - numpy=1.26.4=py312hc5e2394_0
   - numpy-base=1.26.4=py312h0da6c21_0
   - openh264=2.1.1=h4ff587b_0
