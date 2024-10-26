@@ -27,7 +27,7 @@ Alternatively, you can manually install the necessary packages:
 To generate a condensed dataset, execute the following script:
 
 ```bash
-./scripts/run_dual.sh CIFAR10 aug_kmeans 10 128 5e-3 ConvNet 0.1 ViT_Tiny_ft 0.01 ./PATH
+./scripts/run_dual.sh CIFAR10 aug_kmeans 10 128 5e-3 ConvNet 0.01 ViT_Tiny_ft 0.001 ./PATH
 ```
 
 - Note: All models except ConvNet should have either _ft (pretrained) or _scratch (random initialization) appended to their names.
