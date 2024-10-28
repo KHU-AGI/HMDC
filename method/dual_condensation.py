@@ -287,19 +287,19 @@ class DualCondensation(DC_BASE):
         start_it = self.start_iteration
 
         for it in range(self.start_iteration, self.iteration):
-            with torch.no_grad():
-                match_layers_1 = nn.ModuleList([
-                        nn.Linear(feature_1_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
-                    for i in range(self.length_1)])
-                match_layers_2 = nn.ModuleList([
-                        nn.Linear(feature_2_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
-                    for i in range(self.length_2)])
-                match_scale = nn.Parameter(torch.zeros(self.length_1, self.length_2).to(self.device))
-            self.match_optimizer = torch.optim.Adam([
-                {'params': match_layers_1.parameters(), 'lr': 5e-4},
-                {'params': match_layers_2.parameters(), 'lr': 5e-4},
-                {'params': match_scale, 'lr': 5e-2}
-            ], lr=0.1)
+            # with torch.no_grad():
+            #     match_layers_1 = nn.ModuleList([
+            #             nn.Linear(feature_1_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
+            #         for i in range(self.length_1)])
+            #     match_layers_2 = nn.ModuleList([
+            #             nn.Linear(feature_2_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
+            #         for i in range(self.length_2)])
+            #     match_scale = nn.Parameter(torch.zeros(self.length_1, self.length_2).to(self.device))
+            # self.match_optimizer = torch.optim.Adam([
+            #     {'params': match_layers_1.parameters(), 'lr': 5e-4},
+            #     {'params': match_layers_2.parameters(), 'lr': 5e-4},
+            #     {'params': match_scale, 'lr': 5e-2}
+            # ], lr=0.1)
             self.net_1.reset_parameters()
             self.net_2.reset_parameters()
             self.pre_epochs = 0
