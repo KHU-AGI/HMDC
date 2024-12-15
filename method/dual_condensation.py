@@ -212,10 +212,10 @@ class DualCondensation(DC_BASE):
             for i in range(self.length_2)])
         match_scale = nn.Parameter(torch.zeros(self.length_1, self.length_2).to(self.device))
 
-        self.match_optimizer = torch.optim.SGD([
-            {'params': match_layers_1.parameters(), 'lr': 0.001},
-            {'params': match_layers_2.parameters(), 'lr': 0.001},
-            {'params': match_scale, 'lr': 0.001}
+        self.match_optimizer = torch.optim.Adam([
+            {'params': match_layers_1.parameters(), 'lr': 0.01},
+            {'params': match_layers_2.parameters(), 'lr': 0.01},
+            {'params': match_scale, 'lr': 0.01}
         ], lr=0.1)
         
         async def _net_compiled_forward(net, images):
@@ -287,22 +287,22 @@ class DualCondensation(DC_BASE):
         start_it = self.start_iteration
 
         for it in range(self.start_iteration, self.iteration):
-            # with torch.no_grad():
-            #     match_layers_1 = nn.ModuleList([
-            #             nn.Linear(feature_1_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
-            #         for i in range(self.length_1)])
-            #     match_layers_2 = nn.ModuleList([
-            #             nn.Linear(feature_2_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
-            #         for i in range(self.length_2)])
-            #     match_scale = nn.Parameter(torch.zeros(self.length_1, self.length_2).to(self.device))
-            # self.match_optimizer = torch.optim.Adam([
-            #     {'params': match_layers_1.parameters(), 'lr': 5e-4},
-            #     {'params': match_layers_2.parameters(), 'lr': 5e-4},
-            #     {'params': match_scale, 'lr': 5e-2}
-            # ], lr=0.1)
+            with torch.no_grad():
+                match_layers_1 = nn.ModuleList([
+                        nn.Linear(feature_1_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
+                    for i in range(self.length_1)])
+                match_layers_2 = nn.ModuleList([
+                        nn.Linear(feature_2_shapes[i, 1].item(), feature_minimum_channel).to(self.device)
+                    for i in range(self.length_2)])
+                match_scale = nn.Parameter(torch.zeros(self.length_1, self.length_2).to(self.device))
+            self.match_optimizer = torch.optim.Adam([
+                {'params': match_layers_1.parameters(), 'lr': 1e-2},
+                {'params': match_layers_2.parameters(), 'lr': 1e-2},
+                {'params': match_scale, 'lr': 1e-2}
+            ], lr=0.1)
             self.net_1.reset_parameters()
             self.net_2.reset_parameters()
-            self.pre_epochs = 0
+            # self.pre_epochs = 0
             # self.logger.info(f'Iteration {it} / {self.iteration} Warmup for {self.pre_epochs} epochs!')
             # for e in range(self.pre_epochs):
             #     for step, (images, labels) in enumerate(self.get_train_epoch([i for i in range(self.num_classes)])):
@@ -485,14 +485,14 @@ class DualCondensation(DC_BASE):
 
                     loss = loss_1 * grad_scaler[0] + loss_2 * grad_scaler[1]
                     if self.use_mutual_distillation:
-                        loss += feature_loss * grad_scaler[2]
+                        loss = loss + feature_loss * grad_scaler[2]
                     LT += loss.item()
                     loss.backward()
 
                 if self.use_gradient_balance:
                     with torch.no_grad():
-                        grad = self.synthetic_images.grad.view(self.num_classes, self.n_ipc, self.channel, self.factor ** 2, -1)
-                        grad = grad / (grad.abs().max(dim=3, keepdim=True)[0] + 1e-6)
+                        grad = self.synthetic_images.grad.view(self.num_classes, self.n_ipc, self.channel, -1)
+                        grad = grad / (grad.abs().max(dim=3, keepdim=True).values + 1e-6)
                         grad = grad.view(self.num_classes, self.n_ipc, self.channel, *self.im_size)
                         self.synthetic_images.grad.data = grad
                         if grad.isnan().any():self.logger.critical('Nan Detected!'); exit();

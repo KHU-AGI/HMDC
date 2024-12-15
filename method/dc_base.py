@@ -521,7 +521,7 @@ class DC_BASE(object):
         labels = labels[indice]
         if transform is not None:
             for i in range(0, images.shape[0], batchsize):
-                    yield transform((images[i:i+batchsize].to(self.device), labels[i:i+batchsize].to(self.device)))
+                yield transform((images[i:i+batchsize].to(self.device), labels[i:i+batchsize].to(self.device)))
         else:
             for i in range(0, images.shape[0], batchsize):
                 yield images[i:i+batchsize].to(self.device), labels[i:i+batchsize].to(self.device)

@@ -40,6 +40,8 @@ class Transform:
                     x = Transform.AUGMENT_FNS['cutout'][0].__func__(cls, x)
                 x = x.contiguous()
             auges_images.append(x)
+        images = torch.cat(auges_images)
+        labels = labels.repeat(dsa_iter)
         return images, labels
 
     @classmethod
